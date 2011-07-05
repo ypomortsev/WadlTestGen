@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:apigee="http://api.apigee.com/wadl/2010/07/" xmlns="http://wadl.dev.java.net/2009/02"
+             xsi:schemaLocation="http://wadl.dev.java.net/2009/02 http://apigee.com/schemas/wadl-schema.xsd    http://api.apigee.com/wadl/2010/07/ http://apigee.com/schemas/apigee-wadl-extensions.xsd">
+
+
+    <resources base="http://api.twitter.com/1">
+        <resource path="help/test.{format}">
+            <param name="format" type="xsd:string" style="template" required="true" default="json">
+                <option value="xml" mediaType="application/xml"/>
+                <option value="json" mediaType="application/json"/>
+            </param>
+            <method id="helptest" name="GET">
+                <apigee:tags  >
+                    <apigee:tag primary="true">Help</apigee:tag>
+                </apigee:tags>
+                <apigee:authentication   required="false"/>
+                <apigee:example   url="/help/test.{format}"/>
+                <doc   title=""
+                     apigee:url="http://dev.twitter.com/doc/get/help/test">
+                    <![CDATA[Returns the string "ok" in the requested format with a 200 OK HTTP status code.]]></doc>
+            </method>
+        </resource>
+
+        <resource path="statuses/public_timeline.{format}">
+            <param name="format" type="xsd:string" style="template" required="true" default="json">
+                <option value="xml" mediaType="application/xml"/>
+                <option value="json" mediaType="application/json"/>
+                <option value="rss" mediaType="application/rss+xml"/>
+                <option value="atom" mediaType="application/atom+xml"/>
+            </param>
+            <method id="statusespublic_timeline" name="GET">
+                <apigee:tags  >
+                    <apigee:tag primary="true">Timeline</apigee:tag>
+                    <apigee:tag>Status</apigee:tag>
+                </apigee:tags>
+                <apigee:authentication   required="false"/>
+                <apigee:example
+                                url="/statuses/public_timeline.{format}"/>
+                <doc   title=""
+                     apigee:url="http://dev.twitter.com/doc/get/statuses/public_timeline"><![CDATA[Returns the 20 most recent statuses,
+                     including retweets if they exist, from non-protected users.
+                ]]></doc>
+            </method>
+        </resource>
+        <resource path="statuses/home_timeline.{format}">
+            <param name="format" type="xsd:string" style="template" required="true" default="json">
+                <option value="xml" mediaType="application/xml"/>
+                <option value="json" mediaType="application/json"/>
+                <option value="atom" mediaType="application/atom+xml"/>
+            </param>
+            <param name="count" required="false" type="xsd:string" style="query" default="5"/>
+            <param name="page" required="false" type="xsd:string" style="query" default="2"/>
+            <param name="max_id" required="false" type="xsd:string" style="query" default="54321"/>
+            <param name="since_id" required="false" type="xsd:string" style="query" default="12345"/>
+            <param name="skip_user" required="false" type="xsd:string" style="query" default="true"/>
+            <param name="include_entities" required="false" type="xsd:string" style="query" default="true"/>
+            <method id="statuseshome_timeline" name="GET">
+                <apigee:tags  >
+                    <apigee:tag primary="true">Timeline</apigee:tag>
+                    <apigee:tag>Status</apigee:tag>
+                </apigee:tags>
+                <apigee:authentication   required="true"/>
+                <apigee:example
+                                url="/statuses/home_timeline.{format}"/>
+                <doc   title=""
+                     apigee:url="http://dev.twitter.com/doc/get/statuses/home_timeline"><![CDATA[
+                    Returns the 20 most recent statuses, including retweets if they exist,
+                    posted by the authenticating user and the user's they follow.
+                ]]></doc>
+            </method>
+        </resource>
+        <resource path="statuses/user_timeline.{format}">
+            <param name="format" type="xsd:string" style="template" required="true" default="json">
+                <option value="xml" mediaType="application/xml"/>
+                <option value="json" mediaType="application/json"/>
+                <option value="rss" mediaType="application/rss+xml"/>
+                <option value="atom" mediaType="application/atom+xml"/>
+            </param>
+            <param name="count" required="false" type="xsd:string" style="query" default="200"/>
+            <param name="user_id" required="false" type="xsd:string" style="query"
+                   default="10330576396"/>
+            <param name="screen_name" required="false" type="xsd:string" style="query"
+                   default="apigee"/>
+            <param name="since_id" required="false" type="xsd:string" style="query" default="12345"/>
+            <param name="page" required="false" type="xsd:string" style="query" default="2"/>
+            <param name="max_id" required="false" type="xsd:string" style="query" default="54321"/>
+            <param name="skip_user" required="false" type="xsd:string" style="query" default="true"/>
+            <param name="include_entities" required="false" type="xsd:string" style="query" default="true"/>
+            <param name="include_rts" required="false" type="xsd:string" style="query" default="true"/>
+            <!--            <param name="id" required="false" type="xsd:string" style="query"  default=""/> -->
+            <method id="statusesuser_timeline" name="GET">
+                <apigee:tags  >
+                    <apigee:tag primary="true">Timeline</apigee:tag>
+                    <apigee:tag>Status</apigee:tag>
+                </apigee:tags>
+                <apigee:authentication   required="false"/>
+                <apigee:example
+                                url="/statuses/user_timeline.{format}?screen_name={screen_name}"/>
+                <doc   title=""
+                     apigee:url="http://dev.twitter.com/doc/get/statuses/user_timeline"><![CDATA[
+                    Returns the 20 most recent statuses posted by the authenticating user.
+                    It is also possible to request another user's timeline by using the screen_name or user_id parameter.
+                ]]></doc>
+            </method>
+        </resource>
+
+    </resources>
+</application><!-- check authdefaults
+revisit what POST examples include (like params="param1, param2")
+Other tags: GET/POST/PUT/DELETE auth/noauth
+need pretty names for params, and descriptions
+ALSO NEEDS: parameter notes. Response descriptions. And Version added to the template for the base resources. -->

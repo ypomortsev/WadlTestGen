@@ -1,0 +1,7 @@
+paths:
+    wadlFile: wadl/api.twitter.com.xml
+    outputDirectory: gen/twitter/
+    templateDirectory: tpl/
+
+tpl:
+    endpoint: https://ypomortsev-api.apigee.com/twitter

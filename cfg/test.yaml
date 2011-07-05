@@ -1,0 +1,7 @@
+paths:
+    wadlFile: wadl/testWADL.xml
+    outputDirectory: gen/test/
+    templateDirectory: tpl/
+
+tpl:
+    endpoint: https://ypomortsev-api.apigee.com/twitter
