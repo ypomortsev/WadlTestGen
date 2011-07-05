@@ -4,4 +4,4 @@ paths:
     templateDirectory: tpl/
 
 tpl:
-    endpoint: https://ypomortsev-api.apigee.com/twitter
+    endpoint: https://demo-api.apigee.com/twitter

@@ -1,6 +1,6 @@
 // Resources http://api.twitter.com/1
 
-var endPoint = "https://ypomortsev-api.apigee.com/twitter";
+var endPoint = "https://demo-api.apigee.com/twitter";
 
 module("help/test.json");
 
@@ -18,6 +18,7 @@ asyncTest("GET", function() {
 
     var callParams = {
         "callVerb" : "GET",
+        "basicAuthCredentials": "Basic bWFyc2hAZWFydGgybWFyc2guY29tOnByb2R1Y3RvcHM=",
         "extraParams" : {
         }
     };

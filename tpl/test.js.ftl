@@ -33,6 +33,7 @@ asyncTest("${displayName}", function() {
 
     var callParams = {
         "callVerb" : "${method.@name}",
+        "basicAuthCredentials": "Basic bWFyc2hAZWFydGgybWFyc2guY29tOnByb2R1Y3RvcHM=",
         "extraParams" : {
 <#if method.request?exists>
 <#list method.request.param as param>
