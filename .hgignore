@@ -1,6 +1,5 @@
 syntax: glob
 
-.idea/*
-*.iml
+.idea/workspace.xml
 out/production/*
 gen/*
