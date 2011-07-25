@@ -1,5 +1,6 @@
 syntax: glob
 
-.idea/workspace.xml
-out/production/*
+*.iws
+target/*
+
 gen/*

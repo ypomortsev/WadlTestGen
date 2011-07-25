@@ -6,6 +6,9 @@ import com.beust.jcommander.converters.FileConverter;
 import java.io.File;
 
 public class CLIParameters {
-    @Parameter(names = "-cfg", converter = FileConverter.class)
+    @Parameter(names = "-cfg",
+               description = "YAML configuration file",
+               required = true,
+               converter = FileConverter.class)
     public File cfgFile = null;
 }

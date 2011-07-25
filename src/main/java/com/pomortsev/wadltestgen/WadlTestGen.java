@@ -17,7 +17,7 @@ public class WadlTestGen {
         // parse parameters
 
         CLIParameters params = new CLIParameters();
-        new JCommander(params, args);
+        JCommander jcommander = new JCommander(params, args);
 
         // load config
 

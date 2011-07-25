@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="templates">
-    <output-path>$PROJECT_DIR$/out/artifacts/templates</output-path>
-    <root id="archive" name="templates.jar">
-      <element id="file-copy" path="$PROJECT_DIR$/src/tpl/test.html.ftl" />
-      <element id="file-copy" path="$PROJECT_DIR$/src/tpl/test.js.ftl" />
-    </root>
-  </artifact>
-</component>
