@@ -1,12 +1,19 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
+    <name>WadlTestGen</name>
     <groupId>com.pomortsev.wadltestgen</groupId>
     <artifactId>WadlTestGen</artifactId>
-    <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>WadlTestGen</name>
     <url>http://maven.apache.org</url>
+
+    <packaging>jar</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -27,6 +34,13 @@
             <artifactId>snakeyaml</artifactId>
             <version>1.9-SNAPSHOT</version>
         </dependency>
+
+        <dependency>
+          <groupId>org.apache.xmlbeans</groupId>
+          <artifactId>xmlbeans</artifactId>
+          <version>2.4.0</version>
+          <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <repositories>
@@ -36,4 +50,28 @@
             <url>http://oss.sonatype.org/content/groups/public/</url>
         </repository>
     </repositories>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>xmlbeans-maven-plugin</artifactId>
+                <version>2.3.3</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>xmlbeans</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <inherited>true</inherited>
+                <configuration>
+                    <schemaDirectory>src/main/xsd</schemaDirectory>
+                    <sourceSchemas>
+                        <param>wadl-schema.xsd</param>
+                    </sourceSchemas>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
