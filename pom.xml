@@ -17,14 +17,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.pomortsev.wadltestgen</groupId>
-            <artifactId>wadl-schema</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/wadl-schema.jar</systemPath>
-        </dependency>
-
-        <dependency>
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
             <!-- Latest 2.3.x (not 2.4.x), at least 2.3.18 -->
@@ -70,5 +62,62 @@
             <url>http://oss.sonatype.org/content/groups/public/</url>
         </repository>
     </repositories>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.3.1</version>
+                <!-- nothing here -->
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.2-beta-5</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.pomortsev.wadltestgen.WadlTestGen</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>xmlbeans-maven-plugin</artifactId>
+                <version>2.3.3</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>xmlbeans</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <inherited>true</inherited>
+                <configuration>
+                    <schemaDirectory>src/main/xsd</schemaDirectory>
+                    <sourceSchemas>
+                        <param>wadl-schema.xsd</param>
+                    </sourceSchemas>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

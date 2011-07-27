@@ -109,13 +109,6 @@
         <root url="jar://$MAVEN_REPOSITORY$/com/beust/jcommander/1.17/jcommander-1.17-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: com.pomortsev.wadltestgen:wadl-schema:1.0">
-      <CLASSES>
-        <root url="jar://$PROJECT_DIR$/lib/wadl-schema.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES />
-    </library>
     <library name="Maven: commons-lang:commons-lang:2.6">
       <CLASSES>
         <root url="jar://$MAVEN_REPOSITORY$/commons-lang/commons-lang/2.6/commons-lang-2.6.jar!/" />
