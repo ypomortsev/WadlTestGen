@@ -1,2 +1,2 @@
 #!/bin/sh
-mvn exec:java -Dexec.mainClass="com.pomortsev.wadltestgen.WadlTestGen" -Dexec.args="$*"
+mvn exec:java -q -Dexec.mainClass="com.pomortsev.wadltestgen.WadlTestGen" -Dexec.args="$*"

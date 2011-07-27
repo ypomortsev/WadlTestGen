@@ -17,6 +17,14 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.pomortsev.wadltestgen</groupId>
+            <artifactId>wadl-schema</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/wadl-schema.jar</systemPath>
+        </dependency>
+
+        <dependency>
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
             <!-- Latest 2.3.x (not 2.4.x), at least 2.3.18 -->
@@ -36,10 +44,22 @@
         </dependency>
 
         <dependency>
-          <groupId>org.apache.xmlbeans</groupId>
-          <artifactId>xmlbeans</artifactId>
-          <version>2.4.0</version>
-          <scope>compile</scope>
+            <groupId>org.apache.xmlbeans</groupId>
+            <artifactId>xmlbeans</artifactId>
+            <version>2.4.0</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore-nio</artifactId>
+            <version>4.1.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
         </dependency>
     </dependencies>
 
@@ -51,27 +71,4 @@
         </repository>
     </repositories>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>xmlbeans-maven-plugin</artifactId>
-                <version>2.3.3</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>xmlbeans</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <inherited>true</inherited>
-                <configuration>
-                    <schemaDirectory>src/main/xsd</schemaDirectory>
-                    <sourceSchemas>
-                        <param>wadl-schema.xsd</param>
-                    </sourceSchemas>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 </project>
