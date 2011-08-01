@@ -224,6 +224,7 @@ public class ListeningHandler implements NHttpServiceHandler {
                 response.removeHeaders("TE");
                 response.removeHeaders("Trailers");
                 response.removeHeaders("Upgrade");
+                response.addHeader("Access-Control-Allow-Origin","*");
 
                 response.setParams(
                         new DefaultedHttpParams(response.getParams(), this.params));

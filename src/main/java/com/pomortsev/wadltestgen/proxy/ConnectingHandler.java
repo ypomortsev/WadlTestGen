@@ -93,6 +93,7 @@ public class ConnectingHandler implements NHttpClientHandler {
             request.removeHeaders("Upgrade");
             // Remove host header
             request.removeHeaders(HTTP.TARGET_HOST);
+            request.addHeader("Access-Control-Allow-Origin","*");
 
             HttpHost targetHost = proxyTask.getTarget();
 
