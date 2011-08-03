@@ -1,7 +1,6 @@
 package com.pomortsev.wadltestgen;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -71,6 +70,11 @@ public class WadlParser {
         Application app = appDoc.getApplication();
         this.resources = app.getResourcesArray();
 
+        BufferedWriter temp = new BufferedWriter(new FileWriter("temp"));
+        //Form Valid XML Document
+        temp.write("<?xml version=\"1.0\"?>\n");
+        temp.write("<resources>");
+
         //Get Base resources and loop through making sure to add URL
         for (int i = 0; i < resources.length; i++)
         {
@@ -81,6 +85,7 @@ public class WadlParser {
 
             for (int j = 0; j < resource.length; j++)
             {
+                temp.write("\n<resource path=\"" + resource[j].getPath() + "\">");
                 // Init/Clear Arrays and HashMaps
                 this.formatArray = new ArrayList<String>();
                 this.queryArray = new ArrayList<String>();
@@ -130,6 +135,8 @@ public class WadlParser {
                 this.methods = resource[j].getMethodArray();
                 for (int l = 0; l < methods.length; l++)
                 {
+                    temp.write("\n\t<method name=\"" + methods[l].getId() + " " + methods[l].getName() +"\"");
+
                     methodURL = new String(methods[l].getExample().getUrl());
 
                     /* Replace Template Parameters inside of URL
@@ -145,7 +152,7 @@ public class WadlParser {
                         if (n == 0)
                             methodURL = new String(methodURL.concat("?"));
                         else
-                            methodURL = new String(methodURL.concat("&"));
+                            methodURL = new String(methodURL.concat("&amp;"));
 
                         methodURL = new String(methodURL.concat(queryArray.get(n) + "=" + query.get(queryArray.get(n))));
                     }
@@ -180,17 +187,21 @@ public class WadlParser {
                                 if (queryArray.size() == 0 && p == 0)
                                     methodURL = new String(methodURL.concat("?"));
                                 else
-                                    methodURL = new String(methodURL.concat("&"));
+                                    methodURL = new String(methodURL.concat("&amp;"));
 
                                 methodURL = new String(methodURL.concat(paramArray.get(p) + "=" + param.get(paramArray.get(p))));
                             }
                         }
                     }
-                    System.out.print(methods[l].getName() + " ");
-                    System.out.println(resourcesURL + methodURL);
-
+                    temp.write(" url=\"" + resourcesURL + methodURL + "\"/>");
+                    //temp.write("\n\t</method>");
+                    //System.out.print(methods[l].getName() + " ");
+                    //System.out.println(resourcesURL + methodURL);
                 }
+                temp.write("\n</resource>");
             }
         }
+        temp.write("\n</resources>");
+        temp.close();
     }
 }

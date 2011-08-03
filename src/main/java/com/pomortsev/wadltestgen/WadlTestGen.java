@@ -30,6 +30,13 @@ public class WadlTestGen {
             throw new RuntimeException("configuration file not found.");
         }
 
+        try {
+            WadlParser parse = new WadlParser((new File(cfg.paths.wadlFile)));
+            parse.printResources();
+        }  catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
         // process templates
 
         Map<String, Object> tree = new HashMap<String, Object>();
@@ -56,13 +63,15 @@ public class WadlTestGen {
             OutputStreamWriter testOutput = new OutputStreamWriter(
                     new FileOutputStream(new File(testDir, "test.js")));
 
-            File wadlFile = new File(cfg.paths.wadlFile);
+            File wadlFile = new File("temp");
+
 
             tree.put("wadl", freemarker.ext.dom.NodeModel.parse(wadlFile));
             tree.put("tpl", cfg.tpl);
 
             Template tpl = tplCfg.getTemplate("test.js.ftl");
             tpl.process(tree, testOutput);
+            wadlFile.delete();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
