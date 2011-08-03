@@ -1,15 +1,9 @@
-package com.pomortsev.wadltestgen;
+package com.pomortsev.wadltestgen.util;
 
 import java.io.*;
 import java.nio.channels.FileChannel;
 
 public class Utils {
-    public static class NonTemplateFileFilter implements FileFilter {
-        public boolean accept(File file) {
-            return !file.getName().endsWith("ftl") && !file.isHidden();
-        }
-    }
-
     public static void copyFile(File sourceFile, File destFile) throws IOException {
         if (!destFile.exists()) {
             destFile.createNewFile();
@@ -32,7 +26,7 @@ public class Utils {
     }
 
     public static void copyStaticFiles(File inputDir, File outputDir) throws IOException {
-        File[] files = inputDir.listFiles(new NonTemplateFileFilter());
+        File[] files = inputDir.listFiles(new StaticFileFilter());
 
         for (File file : files) {
             File outFile = new File(outputDir, file.getName());
