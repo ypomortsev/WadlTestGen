@@ -1,6 +1,6 @@
 package com.pomortsev.wadltestgen.proxy;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.*;
 import org.apache.http.message.BasicHttpRequest;
 import org.apache.http.nio.*;

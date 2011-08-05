@@ -1,6 +1,6 @@
 package com.pomortsev.wadltestgen.proxy;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Utility functions, based on LittleProxy ProxyUtils.java source.
