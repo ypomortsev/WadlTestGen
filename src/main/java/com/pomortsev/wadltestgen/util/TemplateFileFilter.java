@@ -11,8 +11,7 @@ public class TemplateFileFilter implements FileFilter {
      */
     public boolean accept(File file) {
         String filename = file.getName();
-        return filename.endsWith("ftl") &&
-               !filename.startsWith("_") &&
+        return ((filename.endsWith("ftl") && !filename.startsWith("_")) || file.isDirectory()) &&
                !file.isHidden();
     }
 }

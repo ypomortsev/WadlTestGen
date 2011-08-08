@@ -1,10 +1,10 @@
 paths:
-    wadlFile: wadl/testWADL.xml
-    outputDirectory: gen/test/
+    wadlFile: wadl/api.twitter.com.xml
+    outputDirectory: gen/twitter/
     templateDirectory: tpl/
 
 api:
-    type: PLAIN
+    type: SOURCE
 
 tpl:
     endpoint: https://demo-api.apigee.com/twitter

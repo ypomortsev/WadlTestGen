@@ -3,5 +3,9 @@ paths:
     outputDirectory: gen/twitter/
     templateDirectory: tpl/
 
-tpl:
-    endpoint: https://demo-api.apigee.com/twitter
+api:
+    type: PLAIN
+
+proxy:
+    enabled: true
+    base: http://localhost:8080/

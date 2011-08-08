@@ -8,6 +8,7 @@ import org.yaml.snakeyaml.constructor.Constructor;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class WadlTestGen {
     public static void main(String[] args) {
@@ -29,7 +30,10 @@ public class WadlTestGen {
 
         // run the test suite generator
 
-        Generator generator = new Generator(cfg);
-        generator.generate();
+        try {
+            new Generator(cfg).generate();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
