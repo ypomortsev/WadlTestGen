@@ -101,7 +101,7 @@ public class Proxy {
         t.start();
 
         try {
-            int port = (args.length >= 1) ? Integer.parseInt(args[0]) : 80;
+            int port = (args.length >= 1) ? Integer.parseInt(args[0]) : 8080;
 
             listeningIOReactor.listen(new InetSocketAddress(port));
             listeningIOReactor.execute(listeningEventDispatch);
