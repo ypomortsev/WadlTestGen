@@ -61,8 +61,7 @@ public class ListeningHandler implements NHttpServiceHandler {
 
         synchronized (proxyTask) {
             ConnState connState = proxyTask.getClientState();
-            if (connState != ConnState.IDLE
-                    && connState != ConnState.CONNECTED) {
+            if (connState != ConnState.IDLE && connState != ConnState.CONNECTED) {
                 throw new IllegalStateException("Illegal client connection state: " + connState);
             }
 
@@ -156,16 +155,18 @@ public class ListeningHandler implements NHttpServiceHandler {
             }
 
             try {
-
                 ByteBuffer dst = proxyTask.getInBuffer();
+
                 int bytesRead = decoder.read(dst);
                 System.out.println(conn + " [client->proxy] " + bytesRead + " bytes read");
                 System.out.println(conn + " [client->proxy] " + decoder);
+
                 if (!dst.hasRemaining()) {
                     // Input buffer is full. Suspend client input
                     // until the origin handler frees up some space in the buffer
                     conn.suspendInput();
                 }
+
                 // If there is some content in the input buffer make sure origin
                 // output is active
                 if (dst.position() > 0) {
@@ -183,7 +184,6 @@ public class ListeningHandler implements NHttpServiceHandler {
                 } else {
                     proxyTask.setClientState(ConnState.REQUEST_BODY_STREAM);
                 }
-
             } catch (IOException ex) {
                 shutdownConnection(conn);
             }
@@ -204,8 +204,7 @@ public class ListeningHandler implements NHttpServiceHandler {
                 return;
             }
 
-            if (connState != ConnState.REQUEST_RECEIVED
-                    && connState != ConnState.REQUEST_BODY_DONE) {
+            if (connState != ConnState.REQUEST_RECEIVED && connState != ConnState.REQUEST_BODY_DONE) {
                 throw new IllegalStateException("Illegal client connection state: " + connState);
             }
 
@@ -230,8 +229,7 @@ public class ListeningHandler implements NHttpServiceHandler {
 
                 response.addHeader("Access-Control-Allow-Origin","*");
 
-                response.setParams(
-                        new DefaultedHttpParams(response.getParams(), this.params));
+                response.setParams(new DefaultedHttpParams(response.getParams(), this.params));
 
                 // Close client connection if the connection to the target
                 // is no longer active / open
@@ -291,8 +289,7 @@ public class ListeningHandler implements NHttpServiceHandler {
 
         synchronized (proxyTask) {
             ConnState connState = proxyTask.getClientState();
-            if (connState != ConnState.RESPONSE_SENT
-                    && connState != ConnState.RESPONSE_BODY_STREAM) {
+            if (connState != ConnState.RESPONSE_SENT && connState != ConnState.RESPONSE_BODY_STREAM) {
                 throw new IllegalStateException("Illegal client connection state: " + connState);
             }
 
@@ -348,6 +345,7 @@ public class ListeningHandler implements NHttpServiceHandler {
 
     public void closed(final NHttpServerConnection conn) {
         System.out.println(conn + " [client->proxy] conn closed");
+
         HttpContext context = conn.getContext();
         ProxyTask proxyTask = (ProxyTask) context.getAttribute(ProxyTask.ATTRIB);
 

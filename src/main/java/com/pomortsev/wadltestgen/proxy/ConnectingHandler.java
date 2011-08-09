@@ -44,9 +44,11 @@ public class ConnectingHandler implements NHttpClientHandler {
 
             // Set origin IO control handle
             proxyTask.setOriginIOControl(conn);
+
             // Store the state object in the context
             HttpContext context = conn.getContext();
             context.setAttribute(ProxyTask.ATTRIB, proxyTask);
+
             // Update connection state
             proxyTask.setOriginState(ConnState.CONNECTED);
 
@@ -64,14 +66,12 @@ public class ConnectingHandler implements NHttpClientHandler {
 
         synchronized (proxyTask) {
             ConnState connState = proxyTask.getOriginState();
-            if (connState == ConnState.REQUEST_SENT
-                    || connState == ConnState.REQUEST_BODY_DONE) {
+            if (connState == ConnState.REQUEST_SENT || connState == ConnState.REQUEST_BODY_DONE) {
                 // Request sent but no response available yet
                 return;
             }
 
-            if (connState != ConnState.IDLE
-                    && connState != ConnState.CONNECTED) {
+            if (connState != ConnState.IDLE && connState != ConnState.CONNECTED) {
                 throw new IllegalStateException("Illegal target connection state: " + connState);
             }
 
@@ -90,6 +90,7 @@ public class ConnectingHandler implements NHttpClientHandler {
             request.removeHeaders("TE");
             request.removeHeaders("Trailers");
             request.removeHeaders("Upgrade");
+
             // Remove host header
             request.removeHeaders(HTTP.TARGET_HOST);
 
@@ -98,16 +99,17 @@ public class ConnectingHandler implements NHttpClientHandler {
             HttpHost targetHost = proxyTask.getTarget();
 
             try {
-                request.setParams(
-                        new DefaultedHttpParams(request.getParams(), this.params));
+                request.setParams(new DefaultedHttpParams(request.getParams(), this.params));
 
                 // Pre-process HTTP request
                 context.setAttribute(ExecutionContext.HTTP_CONNECTION, conn);
                 context.setAttribute(ExecutionContext.HTTP_TARGET_HOST, targetHost);
 
                 this.httpProcessor.process(request, context);
+
                 // and send it to the origin server
                 conn.submitRequest(request);
+
                 // Update connection state
                 proxyTask.setOriginState(ConnState.REQUEST_SENT);
 
@@ -128,17 +130,18 @@ public class ConnectingHandler implements NHttpClientHandler {
 
         synchronized (proxyTask) {
             ConnState connState = proxyTask.getOriginState();
-            if (connState != ConnState.REQUEST_SENT
-                    && connState != ConnState.REQUEST_BODY_STREAM) {
+            if (connState != ConnState.REQUEST_SENT && connState != ConnState.REQUEST_BODY_STREAM) {
                 throw new IllegalStateException("Illegal target connection state: " + connState);
             }
 
             try {
                 ByteBuffer src = proxyTask.getInBuffer();
                 src.flip();
+
                 int bytesWritten = encoder.write(src);
                 System.out.println(conn + " [proxy->origin] " + bytesWritten + " bytes written");
                 System.out.println(conn + " [proxy->origin] " + encoder);
+
                 src.compact();
 
                 if (src.position() == 0) {
@@ -174,8 +177,7 @@ public class ConnectingHandler implements NHttpClientHandler {
 
         synchronized (proxyTask) {
             ConnState connState = proxyTask.getOriginState();
-            if (connState != ConnState.REQUEST_SENT
-                    && connState != ConnState.REQUEST_BODY_DONE) {
+            if (connState != ConnState.REQUEST_SENT && connState != ConnState.REQUEST_BODY_DONE) {
                 throw new IllegalStateException("Illegal target connection state: " + connState);
             }
 
@@ -189,6 +191,7 @@ public class ConnectingHandler implements NHttpClientHandler {
                 // Ignore 1xx response
                 return;
             }
+
             try {
                 // Update connection state
                 proxyTask.setResponse(response);
@@ -202,17 +205,16 @@ public class ConnectingHandler implements NHttpClientHandler {
                         conn.close();
                     }
                 }
+
                 // Make sure client output is active
                 proxyTask.getClientIOControl().requestOutput();
-
             } catch (IOException ex) {
                 shutdownConnection(conn);
             }
         }
     }
 
-    private boolean canResponseHaveBody(
-            final HttpRequest request, final HttpResponse response) {
+    private boolean canResponseHaveBody(final HttpRequest request, final HttpResponse response) {
         if (request != null && "HEAD".equalsIgnoreCase(request.getRequestLine().getMethod())) {
             return false;
         }
@@ -269,7 +271,6 @@ public class ConnectingHandler implements NHttpClientHandler {
                 } else {
                     proxyTask.setOriginState(ConnState.RESPONSE_BODY_STREAM);
                 }
-
             } catch (IOException ex) {
                 shutdownConnection(conn);
             }
@@ -278,6 +279,7 @@ public class ConnectingHandler implements NHttpClientHandler {
 
     public void closed(final NHttpClientConnection conn) {
         System.out.println(conn + " [proxy->origin] conn closed");
+
         HttpContext context = conn.getContext();
         ProxyTask proxyTask = (ProxyTask) context.getAttribute(ProxyTask.ATTRIB);
 

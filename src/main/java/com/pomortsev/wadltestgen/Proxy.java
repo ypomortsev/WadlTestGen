@@ -45,7 +45,6 @@ public class Proxy {
             .setParameter(CoreProtocolPNames.USER_AGENT, "HttpComponents/1.1");
 
         final ConnectingIOReactor connectingIOReactor = new DefaultConnectingIOReactor(1, params);
-
         final ListeningIOReactor listeningIOReactor = new DefaultListeningIOReactor(1, params);
 
         // Set up HTTP protocol processor for incoming connections
@@ -103,10 +102,10 @@ public class Proxy {
         try {
             int port = (args.length >= 1) ? Integer.parseInt(args[0]) : 8080;
 
+            System.out.println("Listening on port " + Integer.toString(port) + "...");
+
             listeningIOReactor.listen(new InetSocketAddress(port));
             listeningIOReactor.execute(listeningEventDispatch);
-
-            System.out.println("Listening on port " + Integer.toString(port) + "...");
         } catch (InterruptedIOException ex) {
             System.err.println("Interrupted");
         } catch (IOException e) {
