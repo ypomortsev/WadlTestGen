@@ -6,5 +6,7 @@ paths:
 api:
     type: SOURCE
 
-tpl:
-    endpoint: https://demo-api.apigee.com/twitter
+    source:
+        appName: sourceapp
+        username: user
+        password: pass

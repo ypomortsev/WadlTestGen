@@ -88,6 +88,7 @@
             url: settings.endpoint+request+'.'+settings.type.split(" ")[0],
             type: 'get',
             dataType: 'text',
+            async: false,
             xhrFields: {
               withCredentials: true
             },
@@ -99,20 +100,15 @@
               returnObject.payload = data;
               returnObject.xhr = jqXHR;
               theApi.returnObject = returnObject;
-              if (settings.callback) {
-                var textData = ((typeof data) != 'string') ? JSON.stringify(data) : data;
-                var callbackFunction = new Function(settings.callback+'(\''+textData.replace(/'/g, "\\'")+'\')');
-                callbackFunction();
-              }
+              if (settings.callback) settings.callback(returnObject);
               $.after_request();
             },
             error: function(jqXHR, textStatus, errorThrown) {
               responseMessage = textStatus+" ("+errorThrown+")";
               returnObject.response_message = responseMessage;
               returnObject.xhr = jqXHR;
-              try {
-                showResponseMessage('Sorry, that didn’t work. Please <a href="#" title="instructions">check the instructions</a> and try again.');
-              } catch (e) {}
+              theApi.returnObject = returnObject;
+              if (settings.callback) settings.callback(returnObject);
               $.after_request();
             }
           });
@@ -124,6 +120,7 @@
             type: settings.verb,
             dataType: settings.type,
             contentType: "application/"+settings.type,
+            async: false,
             xhrFields: {
               withCredentials: true
             },
@@ -132,21 +129,16 @@
               returnObject.payload = data;
               returnObject.xhr = jqXHR;
               theApi.returnObject = returnObject;
-              if (settings.callback) {
-                var textData = ((typeof data) != 'string') ? JSON.stringify(data) : data;
-                var callbackFunction = new Function(settings.callback+'(\''+textData.replace(/'/g, "\\'")+'\')');
-                callbackFunction();
-              }
+              if (settings.callback) settings.callback(returnObject);
               $.after_request();
             },
             error: function(jqXHR, textStatus, errorThrown) {
               responseMessage = textStatus+" ("+errorThrown+")";
+              console.error(responseMessage);
               returnObject.response_message = responseMessage;
               returnObject.xhr = jqXHR;
               theApi.returnObject = returnObject;
-              try {
-                showResponseMessage('Sorry, that didn’t work. Please <a href="#" title="instructions">check the instructions</a> and try again.');
-              } catch (e) {}
+              if (settings.callback) settings.callback(returnObject);
               $.after_request();
             }
           });

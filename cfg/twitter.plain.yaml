@@ -6,6 +6,6 @@ paths:
 api:
     type: PLAIN
 
-proxy:
-    enabled: true
-    base: http://localhost:8080/
+    proxy:
+        enabled: true
+        base: http://localhost:8080/

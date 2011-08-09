@@ -1,25 +1,21 @@
-<#import "_util.js.ftl" as util>
 <#import "_test.common.js.ftl" as common>
 
 <#-- Test method base that uses Apigee Source to access the API -->
-<#macro method method resource>
-<@common.method method=method resource=resource>
-    var url = "${method.example.url?js_string}";
+<#macro test method resource>
+<@common.test method=method resource=resource>
+    var url = "/twitter/1${method.example.url?js_string}";
 
-    <@util.methodParams method=method var="params"/>
+    <@common.params method=method var="params"/>
 
-    var sourceCall = new ComApigeeApiCallerQUnit("${cfg.tpl.endpoint?js_string}");
+    sourceApp.sendRequest("${method.name?lower_case}", url, params, {
+        callback: function(response) {
+            if (response.payload)
+                ok(true, "Success!");
+            else
+                ok(false, response.response_message);
 
-    sourceCall.processCall = function (data, textStatus) {
-        ok(false, "Unimplemented");
-    };
-
-    var callParams = {
-        "callVerb" : "${method.name}",
-        "basicAuthCredentials": "Basic bWFyc2hAZWFydGgybWFyc2guY29tOnByb2R1Y3RvcHM=",
-        "extraParams": params
-    };
-
-    sourceCall.callAPI(url, callParams);
-</@common.method>
+            start();
+        }
+    });
+</@common.test>
 </#macro>

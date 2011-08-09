@@ -1,12 +1,11 @@
-<#import "_util.js.ftl" as util>
 <#import "_test.common.js.ftl" as common>
 
 <#-- Test method base that uses a plain old jQuery XHR call -->
-<#macro method method resource>
-<@common.method method=method resource=resource>
+<#macro test method resource>
+<@common.test method=method resource=resource>
     var url = endpoint + "${method.example.url?js_string}";
 
-    <@util.methodParams method=method var="params"/>
+    <@common.params method=method var="params"/>
 
     $.ajax({
          url: url,
@@ -23,5 +22,5 @@
          data: params,
          headers: {}
     });
-</@common.method>
+</@common.test>
 </#macro>

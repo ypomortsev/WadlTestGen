@@ -11,10 +11,6 @@ public class Configuration {
     public Api getApi() { return api; }
     public void setApi(Api api) { this.api = api; }
 
-    public Proxy proxy;
-    public Proxy getProxy() { return proxy; }
-    public void setProxy(Proxy proxy) { this.proxy = proxy; }
-
     public Map tpl;
     public Map getTpl() { return tpl; }
     public void setTpl(Map tpl) { this.tpl = tpl; }
