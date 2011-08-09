@@ -198,22 +198,25 @@ public class ListeningHandler implements NHttpServiceHandler {
 
         synchronized (proxyTask) {
             ConnState connState = proxyTask.getClientState();
+
             if (connState == ConnState.IDLE) {
                 // Response not available
                 return;
             }
+
             if (connState != ConnState.REQUEST_RECEIVED
                     && connState != ConnState.REQUEST_BODY_DONE) {
                 throw new IllegalStateException("Illegal client connection state: " + connState);
             }
 
             try {
-
                 HttpRequest request = proxyTask.getRequest();
                 HttpResponse response = proxyTask.getResponse();
+
                 if (response == null) {
                     throw new IllegalStateException("HTTP request is null");
                 }
+
                 // Remove hop-by-hop headers
                 response.removeHeaders(HTTP.CONTENT_LEN);
                 response.removeHeaders(HTTP.TRANSFER_ENCODING);
@@ -224,6 +227,7 @@ public class ListeningHandler implements NHttpServiceHandler {
                 response.removeHeaders("TE");
                 response.removeHeaders("Trailers");
                 response.removeHeaders("Upgrade");
+
                 response.addHeader("Access-Control-Allow-Origin","*");
 
                 response.setParams(
@@ -259,7 +263,6 @@ public class ListeningHandler implements NHttpServiceHandler {
                         // Ready to deal with a new request
                     }
                 }
-
             } catch (IOException ex) {
                 shutdownConnection(conn);
             } catch (HttpException ex) {
@@ -269,7 +272,6 @@ public class ListeningHandler implements NHttpServiceHandler {
     }
 
     private boolean canResponseHaveBody(final HttpRequest request, final HttpResponse response) {
-
         if (request != null && "HEAD".equalsIgnoreCase(request.getRequestLine().getMethod())) {
             return false;
         }
@@ -302,9 +304,11 @@ public class ListeningHandler implements NHttpServiceHandler {
             try {
                 ByteBuffer src = proxyTask.getOutBuffer();
                 src.flip();
+
                 int bytesWritten = encoder.write(src);
                 System.out.println(conn + " [client<-proxy] " + bytesWritten + " bytes written");
                 System.out.println(conn + " [client<-proxy] " + encoder);
+
                 src.compact();
 
                 if (src.position() == 0) {
@@ -399,14 +403,12 @@ public class ListeningHandler implements NHttpServiceHandler {
     private void shutdownConnection(final NHttpConnection conn) {
         try {
             conn.shutdown();
-        } catch (IOException ignore) {
-        }
+        } catch (IOException ignore) {}
     }
 
     private void closeConnection(final NHttpConnection conn) {
         try {
             conn.close();
-        } catch (IOException ignore) {
-        }
+        } catch (IOException ignore) {}
     }
 }

@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 
 public class ConnectingHandler implements NHttpClientHandler {
-
     private final HttpProcessor httpProcessor;
     private final ConnectionReuseStrategy connStrategy;
     private final HttpParams params;
@@ -93,12 +92,12 @@ public class ConnectingHandler implements NHttpClientHandler {
             request.removeHeaders("Upgrade");
             // Remove host header
             request.removeHeaders(HTTP.TARGET_HOST);
+
             request.addHeader("Access-Control-Allow-Origin","*");
 
             HttpHost targetHost = proxyTask.getTarget();
 
             try {
-
                 request.setParams(
                         new DefaultedHttpParams(request.getParams(), this.params));
 
@@ -113,13 +112,11 @@ public class ConnectingHandler implements NHttpClientHandler {
                 proxyTask.setOriginState(ConnState.REQUEST_SENT);
 
                 System.out.println(conn + " [proxy->origin] >> " + request.getRequestLine().toString());
-
             } catch (IOException ex) {
                 shutdownConnection(conn);
             } catch (HttpException ex) {
                 shutdownConnection(conn);
             }
-
         }
     }
 
@@ -137,7 +134,6 @@ public class ConnectingHandler implements NHttpClientHandler {
             }
 
             try {
-
                 ByteBuffer src = proxyTask.getInBuffer();
                 src.flip();
                 int bytesWritten = encoder.write(src);
@@ -154,6 +150,7 @@ public class ConnectingHandler implements NHttpClientHandler {
                         conn.suspendOutput();
                     }
                 }
+
                 // Update connection state
                 if (encoder.isCompleted()) {
                     System.out.println(conn + " [proxy->origin] request body sent");
@@ -163,7 +160,6 @@ public class ConnectingHandler implements NHttpClientHandler {
                     // Make sure client input is active
                     proxyTask.getClientIOControl().requestInput();
                 }
-
             } catch (IOException ex) {
                 shutdownConnection(conn);
             }
@@ -194,7 +190,6 @@ public class ConnectingHandler implements NHttpClientHandler {
                 return;
             }
             try {
-
                 // Update connection state
                 proxyTask.setResponse(response);
                 proxyTask.setOriginState(ConnState.RESPONSE_RECEIVED);
@@ -214,12 +209,10 @@ public class ConnectingHandler implements NHttpClientHandler {
                 shutdownConnection(conn);
             }
         }
-
     }
 
     private boolean canResponseHaveBody(
             final HttpRequest request, final HttpResponse response) {
-
         if (request != null && "HEAD".equalsIgnoreCase(request.getRequestLine().getMethod())) {
             return false;
         }
@@ -246,16 +239,18 @@ public class ConnectingHandler implements NHttpClientHandler {
 
             HttpResponse response = proxyTask.getResponse();
             try {
-
                 ByteBuffer dst = proxyTask.getOutBuffer();
+
                 int bytesRead = decoder.read(dst);
                 System.out.println(conn + " [proxy<-origin] " + bytesRead + " bytes read");
                 System.out.println(conn + " [proxy<-origin] " + decoder);
+
                 if (!dst.hasRemaining()) {
                     // Output buffer is full. Suspend origin input until
                     // the client handler frees up some space in the buffer
                     conn.suspendInput();
                 }
+
                 // If there is some content in the buffer make sure client output
                 // is active
                 if (dst.position() > 0) {
@@ -311,16 +306,12 @@ public class ConnectingHandler implements NHttpClientHandler {
     private void shutdownConnection(final HttpConnection conn) {
         try {
             conn.shutdown();
-        } catch (IOException ignore) {
-        }
+        } catch (IOException ignore) {}
     }
 
     private void closeConnection(final HttpConnection conn) {
         try {
             conn.shutdown();
-        } catch (IOException ignore) {
-        }
+        } catch (IOException ignore) {}
     }
-
 }
-

@@ -12,18 +12,38 @@ public class ProxyTask {
     public static final String ATTRIB = "nhttp.proxy-task";
 
     private final ByteBuffer inBuffer;
+    public ByteBuffer getInBuffer() { return this.inBuffer; }
+
     private final ByteBuffer outBuffer;
+    public ByteBuffer getOutBuffer() { return this.outBuffer; }
 
     private HttpHost target;
-
-    private IOControl originIOControl;
-    private IOControl clientIOControl;
-
-    private ConnState originState;
-    private ConnState clientState;
+    public HttpHost getTarget() { return this.target; }
+    public void setTarget(final HttpHost target) { this.target = target; }
 
     private HttpRequest request;
+    public HttpRequest getRequest() { return this.request; }
+    public void setRequest(final HttpRequest request) { this.request = request; }
+
     private HttpResponse response;
+    public HttpResponse getResponse() { return this.response; }
+    public void setResponse(final HttpResponse response) { this.response = response; }
+
+    private IOControl clientIOControl;
+    public IOControl getClientIOControl() { return this.clientIOControl; }
+    public void setClientIOControl(final IOControl clientIOControl) { this.clientIOControl = clientIOControl; }
+
+    private IOControl originIOControl;
+    public IOControl getOriginIOControl() { return this.originIOControl; }
+    public void setOriginIOControl(final IOControl originIOControl) { this.originIOControl = originIOControl; }
+
+    private ConnState originState;
+    public ConnState getOriginState() { return this.originState; }
+    public void setOriginState(final ConnState state) { this.originState = state; }
+
+    private ConnState clientState;
+    public ConnState getClientState() { return this.clientState; }
+    public void setClientState(final ConnState state) { this.clientState = state; }
 
     public ProxyTask() {
         super();
@@ -31,70 +51,6 @@ public class ProxyTask {
         this.clientState = ConnState.IDLE;
         this.inBuffer = ByteBuffer.allocateDirect(10240);
         this.outBuffer = ByteBuffer.allocateDirect(10240);
-    }
-
-    public ByteBuffer getInBuffer() {
-        return this.inBuffer;
-    }
-
-    public ByteBuffer getOutBuffer() {
-        return this.outBuffer;
-    }
-
-    public HttpHost getTarget() {
-        return this.target;
-    }
-
-    public void setTarget(final HttpHost target) {
-        this.target = target;
-    }
-
-    public HttpRequest getRequest() {
-        return this.request;
-    }
-
-    public void setRequest(final HttpRequest request) {
-        this.request = request;
-    }
-
-    public HttpResponse getResponse() {
-        return this.response;
-    }
-
-    public void setResponse(final HttpResponse response) {
-        this.response = response;
-    }
-
-    public IOControl getClientIOControl() {
-        return this.clientIOControl;
-    }
-
-    public void setClientIOControl(final IOControl clientIOControl) {
-        this.clientIOControl = clientIOControl;
-    }
-
-    public IOControl getOriginIOControl() {
-        return this.originIOControl;
-    }
-
-    public void setOriginIOControl(final IOControl originIOControl) {
-        this.originIOControl = originIOControl;
-    }
-
-    public ConnState getOriginState() {
-        return this.originState;
-    }
-
-    public void setOriginState(final ConnState state) {
-        this.originState = state;
-    }
-
-    public ConnState getClientState() {
-        return this.clientState;
-    }
-
-    public void setClientState(final ConnState state) {
-        this.clientState = state;
     }
 
     public void reset() {
@@ -118,6 +74,4 @@ public class ProxyTask {
             } catch (IOException ignore) {}
         }
     }
-
 }
-

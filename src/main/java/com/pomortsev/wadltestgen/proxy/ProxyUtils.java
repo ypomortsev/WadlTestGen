@@ -26,19 +26,19 @@ public class ProxyUtils {
             // Browsers particularly seem to send requests in this form when
             // they use CONNECT.
             tempUri = uri;
-        }
-        else {
+        } else {
             // We can't just take a substring from a hard-coded index because it
             // could be either http or https.
             tempUri = StringUtils.substringAfter(uri, "://");
         }
+
         final String hostAndPort;
         if (tempUri.contains("/")) {
             hostAndPort = tempUri.substring(0, tempUri.indexOf("/"));
-        }
-        else {
+        } else {
             hostAndPort = tempUri;
         }
+
         return hostAndPort;
     }
 
@@ -46,17 +46,13 @@ public class ProxyUtils {
         if (uri.contains(":")) {
             final String portStr = StringUtils.substringAfter(uri, ":");
             return Integer.parseInt(portStr);
-        }
-        else if (uri.startsWith("http")) {
+        } else if (uri.startsWith("http")) {
             return 80;
-        }
-        else if (uri.startsWith("https")) {
+        } else if (uri.startsWith("https")) {
             return 443;
-        }
-        else {
+        } else {
             // Unsupported protocol -- return 80 for now.
             return 80;
         }
     }
-
 }
