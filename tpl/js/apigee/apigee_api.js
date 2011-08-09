@@ -134,7 +134,6 @@
             },
             error: function(jqXHR, textStatus, errorThrown) {
               responseMessage = textStatus+" ("+errorThrown+")";
-              console.error(responseMessage);
               returnObject.response_message = responseMessage;
               returnObject.xhr = jqXHR;
               theApi.returnObject = returnObject;
