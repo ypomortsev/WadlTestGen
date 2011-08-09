@@ -42,10 +42,10 @@ function SourceApplication(appName) {
             var goodUser = true;
             var userInfo = [];
 
-            if (theApp.api.doesLocalStorage && localStorage.authorization) {
-                userInfo = $.base64Decode(localStorage.authorization).split(':');
-            } else {
+            if (username && password) {
                 userInfo = [username, password];
+            } else if (theApp.api.doesLocalStorage && localStorage.authorization) {
+                userInfo = $.base64Decode(localStorage.authorization).split(':');
             }
 
             if (userInfo.length == 2) {
