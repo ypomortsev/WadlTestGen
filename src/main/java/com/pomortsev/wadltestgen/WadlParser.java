@@ -55,6 +55,10 @@ public class WadlParser {
         String resourcePath = resource.getPath();
 
         for (Param resourceParam : resource.getParamArray()) {
+            // template parameters only
+            if (resourceParam.getStyle().intValue() != ParamStyle.INT_TEMPLATE)
+                continue;
+
             // template the resource path
             resourcePath = templatePath(resourcePath, resourceParam);
 
@@ -80,10 +84,8 @@ public class WadlParser {
      * @return templated path
      */
     protected String templatePath(String path, Param param) {
-        // process only template parameters with a default value
-        if (param.getStyle().intValue() == ParamStyle.INT_TEMPLATE &&
-            (param.isSetDefault() || param.isSetFixed())) {
-
+        // process only parameters with a default value
+        if (param.isSetDefault() || param.isSetFixed()) {
             // if the parameter is fixed, that value is the default
             String paramDefaultValue = param.isSetFixed() ? param.getFixed() : param.getDefault();
 
