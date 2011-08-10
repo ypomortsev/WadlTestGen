@@ -3,6 +3,8 @@
 <#-- Test method base that uses a plain old jQuery XHR call -->
 <#macro test method resource>
 <@common.test method=method resource=resource>
+    expect(1);
+
     var url = endpoint + "${method.example.url?js_string}";
 
     <@common.params method=method var="params"/>
