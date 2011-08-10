@@ -7,9 +7,9 @@
 
     var url = "/twitter/1${method.example.url?js_string}";
 
-    <@common.params method=method var="params"/>
+    <@common._test.params method=method resource=resource var="params"/>
 
-    sourceApp.sendRequest("${method.name?lower_case}", url, params, {
+    sourceApp.sendRequest("${method.name?lower_case}", url + '?' + $.param(params), {}, {
         callback: function(response) {
             ok(response.payload, response.response_message);
 

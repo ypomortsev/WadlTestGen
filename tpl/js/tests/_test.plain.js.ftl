@@ -7,7 +7,7 @@
 
     var url = endpoint + "${method.example.url?js_string}";
 
-    <@common.params method=method var="params"/>
+    <@common._test.params method=method resource=resource var="params"/>
 
     $.ajax({
          url: url,
