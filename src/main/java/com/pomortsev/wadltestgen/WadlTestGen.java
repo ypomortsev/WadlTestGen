@@ -10,6 +10,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+/**
+ * The main class that invokes the test generator; meant to be used through a CLI or in a script
+ */
 public class WadlTestGen {
     public static void main(String[] args) {
         // parse parameters

@@ -3,6 +3,9 @@ package com.pomortsev.wadltestgen.util;
 import java.io.*;
 import java.nio.channels.FileChannel;
 
+/**
+ * Various utility methods; mainly used by the generator when recreating the template file tree
+ */
 public class Utils {
     public static void copyFile(File sourceFile, File destFile) throws IOException {
         if (!destFile.exists()) {

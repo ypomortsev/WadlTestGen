@@ -4,7 +4,8 @@ import java.io.File;
 import java.io.FileFilter;
 
 /**
- * Filters all files that aren't templates
+ * A FileFilter that filters all files that aren't templates so they can be copied
+ * from the template directory to the output directory
  */
 public class StaticFileFilter implements FileFilter {
     TemplateFileFilter templateFileFilter = new TemplateFileFilter();

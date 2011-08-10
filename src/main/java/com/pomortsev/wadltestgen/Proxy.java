@@ -26,12 +26,9 @@ import java.io.InterruptedIOException;
 import java.net.InetSocketAddress;
 
 /**
- * Rudimentary HTTP/1.1 reverse proxy based on the non-blocking I/O model.
- * <p>
- * Please note the purpose of this application is demonstrate the usage of HttpCore APIs.
- * It is NOT intended to demonstrate the most efficient way of building an HTTP reverse proxy.
+ * A simple HTTP proxy meant to be used to bypass cross origin policy restrictions for API requests
  *
- *
+ * This code is largely based upon org.apache.http.examples.nio.NHttpReverseProxy
  */
 public class Proxy {
     public static void main(String[] args) throws Exception {

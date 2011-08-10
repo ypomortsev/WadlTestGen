@@ -5,6 +5,9 @@ import com.beust.jcommander.converters.FileConverter;
 
 import java.io.File;
 
+/**
+ * Command-line parameters for the main WadlTestGen application
+ */
 public class CLIParameters {
     @Parameter(names = "-cfg",
                description = "YAML configuration file",

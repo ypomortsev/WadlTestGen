@@ -3,6 +3,9 @@ package com.pomortsev.wadltestgen.util;
 import java.io.File;
 import java.io.FileFilter;
 
+/**
+ * A FileFilter used by the generator to select template files to process
+ */
 public class TemplateFileFilter implements FileFilter {
     /**
      * Template files end with the extension "ftl", but we ignore
