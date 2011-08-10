@@ -92,6 +92,8 @@
     </modules>
   </component>
   <component name="ProjectResources">
+    <resource url="http://wadl.dev.java.net/2009/02" location="$PROJECT_DIR$/src/main/xsd/wadl-schema.xsd" />
+    <resource url="http://api.apigee.com/wadl/2010/07/" location="$PROJECT_DIR$/src/main/xsd/apigee-wadl-extensions.xsd" />
     <default-html-doctype>http://www.w3.org/1999/xhtml</default-html-doctype>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_5" assert-keyword="true" jdk-15="true" project-jdk-name="1.6" project-jdk-type="JavaSDK">
