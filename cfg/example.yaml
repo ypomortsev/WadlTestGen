@@ -1,0 +1,41 @@
+# Various filesystem paths that are needed to generate a test suite
+    paths:
+        # The path to the WADL file that describes the API
+        wadlFile: wadl/testWADL.xml
+        # The directory where the generated test suite is output
+        outputDirectory: gen/test/
+        # The directory containing templates that will be processed by the generator
+        # and static files that will be copied as-is
+        templateDirectory: tpl/
+
+# API configuration that is mainly used in the templates
+    api:
+        # The type of API this WADL is describing. Currently the two options
+        # are "PLAIN" and "SOURCE". The former uses a regular XHR call (with an optional
+        # proxy) to call the API, and the latter uses the Apigee Source library.
+        type: PLAIN
+
+        ### PLAIN only
+
+        # Proxy settings to get around same origin policy restrictions in the test suite
+        proxy:
+            # Whether or not the proxy is used to make API calls
+            enabled: true
+            # Proxy base address; usually local. This is used as a simple prefix for the API
+            # calls, like so: http://localhost:8080/http://example.com
+            base: http://localhost:8080/
+
+        ### SOURCE only
+
+        source:
+            # The application name, used to construct an endpoint of the form:
+            #      https://{appName}-api.apigee.com/v1
+            appName: sourceapp
+            # A username associated with the Source application, used to authenticate and retrieve a Smartkey
+            username: user
+            # A password for the given user
+            password: pass
+
+# You can specify your own arbitrary template parameters here. This section is optional.
+    tpl:
+        hello: world
