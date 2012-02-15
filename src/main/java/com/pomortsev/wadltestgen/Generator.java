@@ -86,7 +86,7 @@ public class Generator {
 
         try {
             processTemplates(templateDirectory, outputDirectory);
-        } catch (TemplateException e) {
+        } catch (TemplateException ignored) {
             // errors get logged to the console
         }
     }

@@ -1,6 +1,16 @@
-<#-- Common test suite body. Uses the specified test type -->
-<#macro tests type resources>
-<#import "_test.${type}.js.ftl" as test>
+<#import "_suite.test.js.ftl" as test>
+
+<#list app.getResourcesArray() as resources>
+/*
+ * Configuration
+ */
+
+var endpoint = "${resources.getBase()?js_string}";
+
+/*
+ * Tests
+ */
+
 <#list resources.getResourceArray() as resource>
 module("${resource.getPath()}");
 
@@ -9,4 +19,5 @@ module("${resource.getPath()}");
 
 </#list>
 </#list>
-</#macro>
+
+</#list>

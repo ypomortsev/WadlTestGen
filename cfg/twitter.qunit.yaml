@@ -1,0 +1,4 @@
+paths:
+    wadlFile: wadl/api.twitter.com.xml
+    outputDirectory: gen/twitter-qunit/
+    templateDirectory: tpl/qunit

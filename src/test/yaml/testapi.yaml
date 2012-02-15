@@ -1,0 +1,4 @@
+paths:
+    wadlFile: src/test/wadl/testapi.xml
+    outputDirectory: gen/testapi/
+    templateDirectory: tpl/api-easy

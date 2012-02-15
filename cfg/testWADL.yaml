@@ -1,0 +1,4 @@
+paths:
+    wadlFile: wadl/testWADL.xml
+    outputDirectory: gen/testWADL/
+    templateDirectory: tpl/qunit/
